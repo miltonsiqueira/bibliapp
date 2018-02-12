@@ -2,6 +2,5 @@
 
 angular
   .module('app', [
-    'ngRoute',
-    'app.core'
+    'ngRoute'
   ]);

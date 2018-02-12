@@ -6,16 +6,16 @@ angular.
     function config($routeProvider) {
       $routeProvider.
         when('/book', {
-          template: '<book-list></book-list>'
+          template: '<books></books>'
         }).
         when('/book/:bookId', {
-          template: '<book-detail></book-detail>'
+          template: '<book></book>'
         }).
         when('/author', {
-          template: '<author-list></author-list>'
+          template: '<authors></authors>'
         }).
         when('/author/:authorId', {
-          template: '<author-detail></author-detail>'
+          template: '<author></author>'
         }).
         otherwise('/book');
     }
