@@ -7,7 +7,7 @@
 		<div class="col-sm-6">
 
 			<div class="input-group h2">
-				<input ng-model='criteriaSearch' name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
+				<input ng-keyup="$event.keyCode == 13 ? $ctrl.getBooks() : null" ng-model='criteriaSearch' name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
 				<span class="input-group-btn">
 					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getBooks()">
 						<span class="glyphicon glyphicon-search"></span>
