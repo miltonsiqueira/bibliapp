@@ -1,6 +1,6 @@
 # Bibliapp
 
-Web application that consumes the api `https://bibliapp.herokuapp.com/explorer/`
+Web application that consumes the api `https://bibliapp.herokuapp.com/explorer/` using AngularJS.
 
 ## Dependencies
 
