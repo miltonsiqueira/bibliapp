@@ -7,7 +7,7 @@
 		<div class="col-sm-6">
 
 			<div class="input-group h2">
-				<input name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
+				<input ng-model='criteriaSearch' name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
 				<span class="input-group-btn">
 					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getBooks()">
 						<span class="glyphicon glyphicon-search"></span>
@@ -30,7 +30,7 @@
         <th>Title</th>
         <th class="actions">Actions</th>
       </tr>
-      <tr ng-repeat="book in $ctrl.books">
+      <tr ng-repeat="book in $ctrl.books | filter:criteriaSearch | orderBy:'title'">
         <td>{{book.title}}</td>
         <td class="actions">
           <a class="btn btn-primary btn-xs" ng-click="$ctrl.updateBook(book)">Edit</a>

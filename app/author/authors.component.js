@@ -4,9 +4,13 @@ angular.
   module('app').
   component('authors', {
     templateUrl: 'author/authors.component.html',
+    bindings: {
+      resolve: '<',
+      modalInstance: '<'
+    },
     controller: ['$log', '$uibModal', '$window', 'authorsService',
       function($log, $uibModal, $window, authorsService) {
-        var self = this,
+        var $ctrl = this,
           completedName = function(author) {
             return author.firstName + ' ' + author.lastName;
           },
@@ -14,8 +18,12 @@ angular.
             return author.id + ':' + author.firstName + ':' + author.lastName;
           };
 
-
-        self.deleteAuthor = function (author) {
+        $ctrl.$onInit = function () {
+          if ($ctrl.resolve && $ctrl.resolve.modalData){
+              $ctrl.isModal = true;
+          }
+        };
+        $ctrl.deleteAuthor = function (author) {
           $log.info($uibModal);
           if (author) {
             $uibModal.open({
@@ -51,7 +59,7 @@ angular.
         };
 
 
-        self.updateAuthor = function (author){
+        $ctrl.updateAuthor = function (author){
           $uibModal.open({
             component: 'author',
             keyboard: true,
@@ -71,7 +79,7 @@ angular.
           });
         };
 
-        self.insertAuthor = function (author){
+        $ctrl.insertAuthor = function (author){
           $uibModal.open({
             component: 'author',
             keyboard: true,
@@ -90,22 +98,26 @@ angular.
           });
         };
 
-        self.getAuthors = function () {
+        $ctrl.getAuthors = function () {
           authorsService.getAuthors()
             .then(function success(response) {
-                self.authors = response.data;
-                if (!self.authors) {
-                  self.errorMessage = 'Authors not found';
-                  $log.warn(self.errorMessage);
+                $ctrl.authors = response.data;
+                if (!$ctrl.authors) {
+                  $ctrl.errorMessage = 'Authors not found';
+                  $log.warn($ctrl.errorMessage);
                 }
             },
             function error (response) {
-                self.errorMessage = 'Error getting users!';
-                $log.error(self.errorMessage);
+                $ctrl.errorMessage = 'Error getting users!';
+                $log.error($ctrl.errorMessage);
             });
         };
 
-        self.getAuthors();
+        $ctrl.selectAuthor = function (author) {
+          $ctrl.modalInstance.close(author);
+        };
+
+        $ctrl.getAuthors();
 
       }
     ]

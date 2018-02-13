@@ -1,42 +1,47 @@
+<div ng-class="$ctrl.isModal ? 'modal-body': 'container'">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3">
+        <h2>Authors</h2>
+      </div>
+      <div class="col-sm-6">
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3">
-			<h2>Authors</h2>
-		</div>
-		<div class="col-sm-6">
-
-			<div class="input-group h2">
-				<input name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
-				<span class="input-group-btn">
-					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getAuthors()"">
+        <div class="input-group h2">
+          <input ng-model="criteriaSearch" name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
+          <span class="input-group-btn">
+					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getAuthors()">
 						<span class="glyphicon glyphicon-search"></span>
-					</button>
-				</span>
-			</div>
+          </button>
 
-		</div>
-    <div class=".col-xs-6 .col-md-4">
-      <button type="button" class="btn btn-primary pull-right h2" ng-click="$ctrl.insertAuthor(author)">New Author</button>
+        </div>
+
+      </div>
+      <div class=".col-xs-6 .col-md-4">
+        <button type="button" class="btn btn-primary pull-right h2" ng-show="!$ctrl.isModal" ng-click="$ctrl.insertAuthor(author)">New Author</button>
+        <button type="button" class="btn btn-primary pull-right h2" ng-show="$ctrl.isModal" ng-click="$ctrl.modalInstance.dismiss()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="table-responsive">
+      <fieldset>
+        <table class='table table-hover'>
+          <tr>
+            <th>Name</th>
+            <th class="actions">Actions</th>
+          </tr>
+          <tr ng-repeat="author in $ctrl.authors | filter:criteriaSearch | orderBy:['firstName', 'lastName']">
+            <td>{{author.firstName + " " + author.lastName}}</td>
+            <td class="actions">
+              <a class="btn btn-primary btn-xs" ng-show="$ctrl.isModal" ng-click="$ctrl.selectAuthor(author)">Select</a>
+              <a class="btn btn-primary btn-xs" ng-show="!$ctrl.isModal" ng-click="$ctrl.updateAuthor(author)">Edit</a>
+              <a class="btn btn-danger btn-xs" ng-show="!$ctrl.isModal" ng-click="$ctrl.deleteAuthor(author)">Delete</a>
+            </td>
+          </tr>
+        </table>
+      </fieldset>
     </div>
   </div>
 </div>
-
-<div class="container">
-
-  <div class="table-responsive">
-    <table class='table table-hover'>
-      <tr>
-        <th>Name</th>
-        <th class="actions">Actions</th>
-      </tr>
-      <tr ng-repeat="author in $ctrl.authors">
-        <td>{{author.firstName + " " + author.lastName}}</td>
-        <td class="actions">
-          <a class="btn btn-primary btn-xs" ng-click="$ctrl.updateAuthor(author)">Edit</a>
-          <a class="btn btn-danger btn-xs"  ng-click="$ctrl.deleteAuthor(author)" >Delete</a>
-        </td>
-      </tr>
-    </table>
-  </div>
-</container>

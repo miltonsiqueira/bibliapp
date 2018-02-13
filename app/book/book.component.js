@@ -10,77 +10,107 @@
       close: '&',
       dismiss: '&'
     },
-    controller: ['$log', 'booksService', function($log, booksService) {
-      var $ctrl = this,
-        getAuthorFullName = function(authorId) {
-          // TODO
-            return "TODO";
-        };
+    controller: ['$log', '$uibModal', 'booksService', 'authorsService',
+      function($log, $uibModal, booksService, authorsService) {
+        var $ctrl = this,
+          getAuthor = function() {
 
-      $ctrl.$onInit = function() {
-
-        $ctrl.isUpdate = $ctrl.resolve && $ctrl.resolve.data &&
-          $ctrl.resolve.data.book;
-
-
-
-        if ($ctrl.isUpdate) {
-          $ctrl.title = "Book - Update";
-          $ctrl.book = $ctrl.resolve.data.book;
-          $ctrl.id = $ctrl.book.id;
-          $ctrl.bookTitle = $ctrl.book.title;
-          $ctrl.authorId = $ctrl.book.authorId;
-          $ctrl.authorFullName = getAuthorFullName($ctrl.authorId);
-        } else {
-          $ctrl.title = "Book - Insert";
-
-        }
-
-      };
-
-      $ctrl.ok = function() {
-        var operationFailed = function(response) {
-            self.errorMessage = response.status;
-            $log.error(self.errorMessage);
-
-            $uibModal.open({
-              component: 'dialogConfirmation',
-              size: 'sm',
-              keyboard: true,
-              resolve: {
-                data: function() {
-                  return {
-                    title: 'Operation failed',
-                    message: self,
-                    isOnlyOk: true
-                  };
-                }
-              }
-            });
-          },
-          operationSucessed = function(response) {
-            if ($ctrl.isUpdate) {
-              $ctrl.book.title = $ctrl.bookTitle;
-              $ctrl.book.authorId = $ctrl.authorId;
-            }
-            $ctrl.close();
+            authorsService.getAuthor($ctrl.authorId)
+              .then(function success(response) {
+                  $ctrl.author = response.data;
+                  $ctrl.authorFullName = authorsService.getAuthorFullName($ctrl.author);
+                },
+                function error(response) {
+                  $log.error('Cannot retrieving authorId ' + $ctrl.authorId);
+                });
           };
 
-        if ($ctrl.isUpdate) {
-          booksService.updateBook($ctrl.id, $ctrl.bookTitle, $ctrl.authorId)
-            .then(operationSucessed, operationFailed);
-        } else {
-          booksService.addBook($ctrl.title, $ctrl.authorId)
-            .then(operationSucessed, operationFailed);
-        }
+        $ctrl.$onInit = function() {
 
-      };
+          $ctrl.isUpdate = $ctrl.resolve && $ctrl.resolve.data &&
+            $ctrl.resolve.data.book;
 
-      $ctrl.cancel = function() {
-        $ctrl.dismiss();
-      };
 
-    }]
+
+          if ($ctrl.isUpdate) {
+            $ctrl.title = "Book - Update";
+            $ctrl.book = $ctrl.resolve.data.book;
+            $ctrl.id = $ctrl.book.id;
+            $ctrl.bookTitle = $ctrl.book.title;
+            $ctrl.authorId = $ctrl.book.authorId;
+            getAuthor();
+          } else {
+            $ctrl.title = "Book - Insert";
+
+          }
+
+        };
+
+        $ctrl.ok = function() {
+          var operationFailed = function(response) {
+              self.errorMessage = response.status;
+              $log.error(self.errorMessage);
+
+              $uibModal.open({
+                component: 'dialogConfirmation',
+                size: 'sm',
+                keyboard: true,
+                resolve: {
+                  data: function() {
+                    return {
+                      title: 'Operation failed',
+                      message: self,
+                      isOnlyOk: true
+                    };
+                  }
+                }
+              });
+            },
+            operationSucessed = function(response) {
+              if ($ctrl.isUpdate) {
+                $ctrl.book.title = $ctrl.bookTitle;
+                $ctrl.book.authorId = $ctrl.authorId;
+              }
+              $ctrl.close();
+            };
+
+          if ($ctrl.isUpdate) {
+            booksService.updateBook($ctrl.id, $ctrl.bookTitle, $ctrl.authorId)
+              .then(operationSucessed, operationFailed);
+          } else {
+            booksService.addBook($ctrl.bookTitle, $ctrl.authorId)
+              .then(operationSucessed, operationFailed);
+          }
+
+        };
+
+        $ctrl.cancel = function() {
+          $ctrl.dismiss();
+        };
+
+        $ctrl.selectAuthor = function() {
+          $uibModal.open({
+            component: 'authors',
+            keyboard: true,
+            resolve: {
+              modalData: function() {
+                return {
+                  titleModal: 'Selecione a author for the book'
+                };
+              }
+            }
+          }).
+          result.then(function(author) {
+            $ctrl.authorFullName = authorsService.getAuthorFullName(author);
+            $ctrl.authorId = $ctrl.book.authorId;
+          }, function() {
+            $log.debug('Modal cancel');
+          });
+
+        };
+
+      }
+    ]
   });
 
 })();

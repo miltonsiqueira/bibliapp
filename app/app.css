@@ -12,3 +12,11 @@
   margin-top: 20px;
   text-align: center;
 }
+
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
+.modal-body {
+  overflow-x: auto;
+}
