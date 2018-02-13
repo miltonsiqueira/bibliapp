@@ -2,14 +2,14 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-3">
-			<h2>Authors</h2>
+			<h2>Books</h2>
 		</div>
 		<div class="col-sm-6">
 
 			<div class="input-group h2">
 				<input name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
 				<span class="input-group-btn">
-					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getAuthors()"">
+					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getBooks()">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
 				</span>
@@ -17,7 +17,7 @@
 
 		</div>
     <div class=".col-xs-6 .col-md-4">
-      <button type="button" class="btn btn-primary pull-right h2" ng-click="$ctrl.insertAuthor(author)">New Author</button>
+      <button type="button" class="btn btn-primary pull-right h2" ng-click="$ctrl.insertBook(book)">New Book</button>
     </div>
   </div>
 </div>
@@ -27,14 +27,14 @@
   <div class="table-responsive">
     <table class='table table-hover'>
       <tr>
-        <th>Name</th>
+        <th>Title</th>
         <th class="actions">Actions</th>
       </tr>
-      <tr ng-repeat="author in $ctrl.authors">
-        <td>{{author.firstName + " " + author.lastName}}</td>
+      <tr ng-repeat="book in $ctrl.books">
+        <td>{{book.title}}</td>
         <td class="actions">
-          <a class="btn btn-primary btn-xs" ng-click="$ctrl.updateAuthor(author)">Edit</a>
-          <a class="btn btn-danger btn-xs"  ng-click="$ctrl.deleteAuthor(author)" >Delete</a>
+          <a class="btn btn-primary btn-xs" ng-click="$ctrl.updateBook(book)">Edit</a>
+          <a class="btn btn-danger btn-xs"  ng-click="$ctrl.deleteBook(book)" >Delete</a>
         </td>
       </tr>
     </table>

@@ -17,6 +17,6 @@ angular.
         when('/author/:authorId', {
           template: '<author></author>'
         }).
-        otherwise('/book');
+        otherwise('/author');
     }
   ]);

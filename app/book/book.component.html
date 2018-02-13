@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">{{ $ctrl.title }}</h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+  <form name="bookForm">
+    <input class="form-control" type="text" ng-model="$ctrl.bookTitle" placeholder="title" required />
+    <input class="form-control" type="text" ng-model="$ctrl.authorFullName" placeholder="Author" readonly/>
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="submit">
+        <span class="glyphicon glyphicon-search"></span>
+        Author
+      </button>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()" ng-disabled="bookForm.$invalid">Save</button>
+  <button class="btn btn-primary" type="button" ng-show="!$ctrl.isOnlyOk" ng-click="$ctrl.cancel()">Cancel</button>
+</div>

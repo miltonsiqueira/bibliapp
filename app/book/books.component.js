@@ -2,22 +2,19 @@
 
 angular.
   module('app').
-  component('authors', {
-    templateUrl: 'author/authors.component.html',
-    controller: ['$log', '$uibModal', '$window', 'authorsService',
-      function($log, $uibModal, $window, authorsService) {
+  component('books', {
+    templateUrl: 'book/books.component.html',
+    controller: ['$log', '$uibModal', '$window', 'booksService',
+      function($log, $uibModal, $window, booksService) {
         var self = this,
-          completedName = function(author) {
-            return author.firstName + ' ' + author.lastName;
-          },
-          authorToString = function(author) {
-            return author.id + ':' + author.firstName + ':' + author.lastName;
+          bookToString = function(book) {
+            return book.id + ':' + book.title + ':' + book.authorId;
           };
 
 
-        self.deleteAuthor = function (author) {
+        self.deleteBook = function (book) {
           $log.info($uibModal);
-          if (author) {
+          if (book) {
             $uibModal.open({
               component: 'dialogConfirmation',
               size: 'sm',
@@ -26,20 +23,20 @@ angular.
                 data: function() {
                   return {
                     title: 'Confirm delete',
-                    message: 'Are you sure to delete the author "' +
-                      completedName(author) + '"?'
+                    message: 'Are you sure to delete the book "' +
+                      book.title + '"?'
                   };
                 }
               }
             }).
             result.then(function() {
-              authorsService.deleteAuthor(author.id)
+              booksService.deleteBook(book.id)
                 .then(function success(response) {
-                    $log.info('Author deleted ' + authorToString(author));
-                    // TODO remove from the list the author deleted
+                    $log.info('Book deleted ' + bookToString(book));
+                    // TODO remove from the list the book deleted
                 },
                 function error (response) {
-                  $log.error('Author cannot be deleted ' + authorToString(author));
+                  $log.error('Book cannot be deleted ' + bookToString(book));
                 });
 
             }, function () {
@@ -51,29 +48,29 @@ angular.
         };
 
 
-        self.updateAuthor = function (author){
+        self.updateBook = function (book){
           $uibModal.open({
-            component: 'author',
+            component: 'book',
             keyboard: true,
             resolve: {
               data: function() {
                 return {
-                  author: author
+                  book: book
                 };
               }
             }
           }).
           result.then(function() {
-            // TODO update list with the author updated
+            // TODO update list with the book updated
 
           }, function () {
             $log.debug('Modal cancel');
           });
         };
 
-        self.insertAuthor = function (author){
+        self.insertBook = function (book){
           $uibModal.open({
-            component: 'author',
+            component: 'book',
             keyboard: true,
             resolve: {
               data: function() {
@@ -83,19 +80,19 @@ angular.
             }
           }).
           result.then(function() {
-            // TODO update list with the author updated
+            // TODO update list with the book updated
 
           }, function () {
             $log.debug('Modal cancel');
           });
         };
 
-        self.getAuthors = function () {
-          authorsService.getAuthors()
+        self.getBooks = function () {
+          booksService.getBooks()
             .then(function success(response) {
-                self.authors = response.data;
-                if (!self.authors) {
-                  self.errorMessage = 'Authors not found';
+                self.books = response.data;
+                if (!self.books) {
+                  self.errorMessage = 'Books not found';
                   $log.warn(self.errorMessage);
                 }
             },
@@ -105,7 +102,7 @@ angular.
             });
         };
 
-        self.getAuthors();
+        self.getBooks();
 
       }
     ]

@@ -32,11 +32,12 @@ angular.module('app')
 
     this.updateAuthor = function (id, firstName, lastName) {
       return $http({
-          method : 'PATCH',
+          method : 'PUT',
           url : apiPrefix + 'authors/' + id,
           data : {
               firstName : firstName,
-              lastName: lastName
+              lastName: lastName,
+              id: id
           }
       });
 
