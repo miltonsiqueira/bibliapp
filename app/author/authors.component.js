@@ -44,7 +44,10 @@ angular.
               authorsService.deleteAuthor(author.id)
                 .then(function success(response) {
                     $log.info('Author deleted ' + authorToString(author));
-                    // TODO remove from the list the author deleted
+                    var index = $ctrl.authors.indexOf(author);
+                    if (index !== -1) {
+                     $ctrl.authors.splice(index, 1);
+                    }
                 },
                 function error (response) {
                   $log.error('Author cannot be deleted ' + authorToString(author));

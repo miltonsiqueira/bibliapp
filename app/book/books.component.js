@@ -33,7 +33,10 @@ angular.
               booksService.deleteBook(book.id)
                 .then(function success(response) {
                     $log.info('Book deleted ' + bookToString(book));
-                    // TODO remove from the list the book deleted
+                    var index = $ctrl.books.indexOf(book);
+                    if (index !== -1) {
+                     $ctrl.books.splice(index, 1);
+                    }
                 },
                 function error (response) {
                   $log.error('Book cannot be deleted ' + bookToString(book));
