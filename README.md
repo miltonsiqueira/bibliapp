@@ -1,13 +1,15 @@
 # Bibliapp
 
-## Pré-requisitos
+Web application that consumes the api `https://bibliapp.herokuapp.com/explorer/`
+
+## Dependencies
 
 * NodeJS
 
-## Uso
+## Usage
 
-* Baixe este repositório: `git clone https://github.com/titomilton/bibliapp.git`
-* Entre no seu diretório: `cd bibliapp`
-* `npm install`
-* `npm start`
-* Aplicação ficará disponível em `http://localhost:8000`
+* Download this repository `git clone https://github.com/titomilton/bibliapp.git`
+* Go to `cd bibliapp`
+* Execute `npm install`
+* Execute  `npm start`
+* Open the url `http://localhost:8000`
