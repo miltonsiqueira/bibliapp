@@ -3,5 +3,5 @@
 angular.
   module('app').
   component('app', {
-    templateUrl: 'app.template.html'
+    templateUrl: 'app.component.html'
   });
