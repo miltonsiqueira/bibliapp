@@ -4,6 +4,7 @@
 
 <div class="modal-body" id="modal-body">
   <form name="bookForm">
+    <b ng-show="$ctrl.isUpdate">{{$ctrl.id}}</b>
     <input class="form-control" type="text" ng-model="$ctrl.bookTitle" placeholder="Book Title" required />
     <input class="form-control" type="text" ng-model="$ctrl.authorFullName" placeholder="Book Author" required readonly/>
     <span class="input-group-btn">

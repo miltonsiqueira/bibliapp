@@ -51,7 +51,7 @@ angular.
                 });
 
             }, function () {
-              $log.debug('Modal cancel');
+
             });
 
           }
@@ -72,10 +72,9 @@ angular.
             }
           }).
           result.then(function() {
-            // TODO update list with the author updated
 
           }, function () {
-            $log.debug('Modal cancel');
+
           });
         };
 
@@ -91,10 +90,10 @@ angular.
             }
           }).
           result.then(function() {
-            // TODO update list with the author updated
+            $ctrl.getAuthors();
 
           }, function () {
-            $log.debug('Modal cancel');
+            
           });
         };
 

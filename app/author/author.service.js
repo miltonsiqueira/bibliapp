@@ -10,7 +10,7 @@ angular.module('app')
     };
 
     this.getAuthors = function() {
-      $log.info("Calling api GET " + apiPrefix + 'authors');
+      $log.info("API GET " + apiPrefix + 'authors');
       return $http({
         method: 'GET',
         url: apiPrefix + 'authors'
@@ -18,7 +18,7 @@ angular.module('app')
     };
 
     this.getAuthor = function(authorId) {
-      $log.info("Calling api GET " + apiPrefix + 'authors/' + authorId);
+      $log.info("API GET " + apiPrefix + 'authors/' + authorId);
       return $http({
         method: 'GET',
         url: apiPrefix + 'authors/' + authorId
@@ -26,7 +26,7 @@ angular.module('app')
     };
 
     this.addAuthor = function(firstName, lastName) {
-      $log.info("Calling api POST " + apiPrefix + 'authors');
+      $log.info("API POST " + apiPrefix + 'authors');
       return $http({
         method: 'POST',
         url: apiPrefix + 'authors',
@@ -38,7 +38,7 @@ angular.module('app')
     };
 
     this.updateAuthor = function(id, firstName, lastName) {
-      $log.info("Calling api PUT " + apiPrefix + 'authors/' + id);
+      $log.info("API PUT " + apiPrefix + 'authors/' + id);
       return $http({
         method: 'PUT',
         url: apiPrefix + 'authors/' + id,
@@ -52,7 +52,7 @@ angular.module('app')
     };
 
     this.deleteAuthor = function(id) {
-      $log.info("Calling api DELETE " + apiPrefix + 'authors/' + id);
+      $log.info("API DELETE " + apiPrefix + 'authors/' + id);
       return $http({
         method: 'DELETE',
         url: apiPrefix + 'authors/' + id

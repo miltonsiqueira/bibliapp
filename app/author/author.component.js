@@ -7,8 +7,7 @@
     templateUrl: 'author/author.component.html',
     bindings: {
       resolve: '<',
-      close: '&',
-      dismiss: '&'
+      modalInstance: '<'
     },
     controller: ['$log', 'authorsService', function($log, authorsService) {
       var $ctrl = this;
@@ -58,7 +57,7 @@
               $ctrl.author.firstName = $ctrl.firstName;
               $ctrl.author.lastName = $ctrl.lastName;
             }
-            $ctrl.close();
+            $ctrl.modalInstance.close();
           };
 
         if ($ctrl.isUpdate) {
@@ -72,7 +71,7 @@
       };
 
       $ctrl.cancel = function() {
-        $ctrl.dismiss();
+        $ctrl.modalInstance.dismiss();
       };
 
     }]

@@ -7,8 +7,7 @@
     templateUrl: 'book/book.component.html',
     bindings: {
       resolve: '<',
-      close: '&',
-      dismiss: '&'
+      modalInstance: '<'
     },
     controller: ['$log', '$uibModal', 'booksService', 'authorsService',
       function($log, $uibModal, booksService, authorsService) {
@@ -17,8 +16,7 @@
 
             authorsService.getAuthor($ctrl.authorId)
               .then(function success(response) {
-                  $ctrl.author = response.data;
-                  $ctrl.authorFullName = authorsService.getAuthorFullName($ctrl.author);
+                  $ctrl.authorFullName = authorsService.getAuthorFullName(response.data);
                 },
                 function error(response) {
                   $log.error('Cannot retrieving authorId ' + $ctrl.authorId);
@@ -38,7 +36,9 @@
             $ctrl.id = $ctrl.book.id;
             $ctrl.bookTitle = $ctrl.book.title;
             $ctrl.authorId = $ctrl.book.authorId;
-            getAuthor();
+            if ($ctrl.authorId) {
+              getAuthor();
+            }
           } else {
             $ctrl.title = "Book - Insert";
 
@@ -71,7 +71,7 @@
                 $ctrl.book.title = $ctrl.bookTitle;
                 $ctrl.book.authorId = $ctrl.authorId;
               }
-              $ctrl.close();
+              $ctrl.modalInstance.close();
             };
 
           if ($ctrl.isUpdate) {
@@ -85,7 +85,7 @@
         };
 
         $ctrl.cancel = function() {
-          $ctrl.dismiss();
+          $ctrl.modalInstance.dismiss();
         };
 
         $ctrl.selectAuthor = function() {
@@ -102,7 +102,7 @@
           }).
           result.then(function(author) {
             $ctrl.authorFullName = authorsService.getAuthorFullName(author);
-            $ctrl.authorId = $ctrl.book.authorId;
+            $ctrl.authorId = author.id;
           }, function() {
             $log.debug('Modal cancel');
           });

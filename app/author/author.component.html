@@ -4,6 +4,7 @@
 
 <div class="modal-body" id="modal-body">
   <form name="authorForm">
+    <b ng-show="$ctrl.isUpdate">{{$ctrl.id}}</b>
     <input class="form-control" type="text" ng-model="$ctrl.firstName" placeholder="Author First Name" required />
     <input class="form-control" type="text" ng-model="$ctrl.lastName" placeholder="Author Last Name" required />
   </form>

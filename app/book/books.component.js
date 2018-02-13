@@ -6,13 +6,13 @@ angular.
     templateUrl: 'book/books.component.html',
     controller: ['$log', '$uibModal', '$window', 'booksService',
       function($log, $uibModal, $window, booksService) {
-        var self = this,
+        var $ctrl = this,
           bookToString = function(book) {
             return book.id + ':' + book.title + ':' + book.authorId;
           };
 
 
-        self.deleteBook = function (book) {
+        $ctrl.deleteBook = function (book) {
           $log.info($uibModal);
           if (book) {
             $uibModal.open({
@@ -40,7 +40,7 @@ angular.
                 });
 
             }, function () {
-              $log.debug('Modal cancel');
+
             });
 
           }
@@ -48,7 +48,7 @@ angular.
         };
 
 
-        self.updateBook = function (book){
+        $ctrl.updateBook = function (book){
           $uibModal.open({
             component: 'book',
             keyboard: true,
@@ -61,14 +61,13 @@ angular.
             }
           }).
           result.then(function() {
-            // TODO update list with the book updated
 
           }, function () {
-            $log.debug('Modal cancel');
+
           });
         };
 
-        self.insertBook = function (book){
+        $ctrl.insertBook = function (book){
           $uibModal.open({
             component: 'book',
             keyboard: true,
@@ -80,29 +79,29 @@ angular.
             }
           }).
           result.then(function() {
-            // TODO update list with the book updated
+            $ctrl.getBooks();
 
           }, function () {
-            $log.debug('Modal cancel');
+
           });
         };
 
-        self.getBooks = function () {
+        $ctrl.getBooks = function () {
           booksService.getBooks()
             .then(function success(response) {
-                self.books = response.data;
-                if (!self.books) {
-                  self.errorMessage = 'Books not found';
-                  $log.warn(self.errorMessage);
+                $ctrl.books = response.data;
+                if (!$ctrl.books) {
+                  $ctrl.errorMessage = 'Books not found';
+                  $log.warn($ctrl.errorMessage);
                 }
             },
             function error (response) {
-                self.errorMessage = 'Error getting users!';
-                $log.error(self.errorMessage);
+                $ctrl.errorMessage = 'Error getting users!';
+                $log.error($ctrl.errorMessage);
             });
         };
 
-        self.getBooks();
+        $ctrl.getBooks();
 
       }
     ]
