@@ -93,7 +93,7 @@ angular.
             $ctrl.getAuthors();
 
           }, function () {
-            
+
           });
         };
 
@@ -105,6 +105,7 @@ angular.
                   $ctrl.errorMessage = 'Authors not found';
                   $log.warn($ctrl.errorMessage);
                 }
+                $ctrl.configPagination();
             },
             function error (response) {
                 $ctrl.errorMessage = 'Error getting users!';
@@ -114,6 +115,23 @@ angular.
 
         $ctrl.selectAuthor = function (author) {
           $ctrl.modalInstance.close(author);
+        };
+        $ctrl.configPagination = function () {
+          $ctrl.pagination = {
+            currentPage: 0,
+            maxSize: 0,
+            totalPerPage: 5,
+            displayItems: []
+          };
+
+          if($ctrl.authors) {
+            $ctrl.pagination.currentPage = 1;
+            //$ctrl.pagination.displayItems = $ctrl.authors.slice(0, $ctrl.pagination.totalPerPage);
+          }
+          $log.info("displayItems:" + $ctrl.pagination.displayItems);
+        };
+        $ctrl.pageChanged = function () {
+          $log.info("Current page is " + $ctrl.pagination.currentPage);
         };
 
         $ctrl.getAuthors();

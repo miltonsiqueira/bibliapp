@@ -94,14 +94,33 @@ angular.
                   $ctrl.errorMessage = 'Books not found';
                   $log.warn($ctrl.errorMessage);
                 }
+                $ctrl.configPagination();
             },
             function error (response) {
                 $ctrl.errorMessage = 'Error getting users!';
                 $log.error($ctrl.errorMessage);
             });
         };
+        $ctrl.configPagination = function () {
+          $ctrl.pagination = {
+            currentPage: 0,
+            maxSize: 0,
+            totalPerPage: 5,
+            displayItems: []
+          };
+
+          if($ctrl.books) {
+            $ctrl.pagination.currentPage = 1;
+            //$ctrl.pagination.displayItems = $ctrl.bookes.slice(0, $ctrl.pagination.totalPerPage);
+          }
+          $log.info("displayItems:" + $ctrl.pagination.displayItems);
+        };
+        $ctrl.pageChanged = function () {
+          $log.info("Current page is " + $ctrl.pagination.currentPage);
+        };
 
         $ctrl.getBooks();
+
 
       }
     ]

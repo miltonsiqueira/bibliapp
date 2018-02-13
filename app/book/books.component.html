@@ -31,7 +31,8 @@
         <th>Title</th>
         <th class="actions">Actions</th>
       </tr>
-      <tr ng-repeat="book in $ctrl.books | filter:criteriaSearch | orderBy:'title'">
+      <!-- <tr ng-repeat="book in $ctrl.books | filter:criteriaSearch | orderBy:'title'"> -->
+      <tr ng-repeat="book in $ctrl.pagination.displayItems = ($ctrl.books | filter:criteriaSearch) | orderBy:'title' | limitTo:$ctrl.pagination.totalPerPage:$ctrl.pagination.totalPerPage*($ctrl.pagination.currentPage-1)">
         <td>{{book.id}}</td>
         <td>{{book.title}}</td>
         <td class="actions">
@@ -40,5 +41,8 @@
         </td>
       </tr>
     </table>
+    <ul uib-pagination ng-model="$ctrl.pagination.currentPage" total-items="$ctrl.pagination.displayItems.length"
+       ng-change="$ctrl.pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page="$ctrl.pagination.totalPerPage"></ul>
+
   </div>
 </container>
