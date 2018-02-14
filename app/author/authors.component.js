@@ -137,6 +137,12 @@ angular.
           $log.info("Current page is " + $ctrl.pagination.currentPage);
         };
 
+        $ctrl.filterFullName = function(author) {
+          author.fullName = author.fullName || authorsService.getAuthorFullName(author);
+          return !$ctrl.criteriaSearch ||
+            author.fullName.toLowerCase().indexOf($ctrl.criteriaSearch.toLowerCase()) != -1;
+        };
+
         $ctrl.getAuthors();
 
       }

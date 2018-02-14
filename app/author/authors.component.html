@@ -34,7 +34,7 @@
             <th class="actions">Actions</th>
           </tr>
           <!-- <tr ng-repeat="author in $ctrl.authors | filter:criteriaSearch | orderBy:['firstName', 'lastName']"> -->
-          <tr ng-repeat="author in $ctrl.pagination.displayItems = ($ctrl.authors | filter:criteriaSearch) | orderBy:['firstName', 'lastName'] | limitTo:$ctrl.pagination.totalPerPage:$ctrl.pagination.totalPerPage*($ctrl.pagination.currentPage-1)">
+          <tr ng-repeat="author in $ctrl.pagination.displayItems = ($ctrl.authors | filter:criteriaSearch | filter:$ctrl.filterFullName) | orderBy:['firstName', 'lastName'] | limitTo:$ctrl.pagination.totalPerPage:$ctrl.pagination.totalPerPage*($ctrl.pagination.currentPage-1)">
             <td>{{author.id}}</td>
             <td>{{author.firstName + " " + author.lastName}}</td>
             <td class="actions">
