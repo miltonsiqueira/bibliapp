@@ -1,29 +1,29 @@
-<div ng-class="$ctrl.isModal ? 'modal-body': 'container'">
+<div ng-class="$ctrl.isModal ? 'modal-body': 'container-fluid'">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-xs-12 col-md-4">
         <h3>Authors</h3>
       </div>
-      <div class="col-sm-6">
+      <div class="col-xs-9 col-md-4">
 
         <div class="input-group h2">
-          <input ng-keyup="$event.keyCode == 13 ? $ctrl.getAuthors() : null" ng-model="criteriaSearch" name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
+          <input ng-keyup="$event.keyCode == 13 ? $ctrl.getAuthors() : null" ng-model="criteriaSearch" class="form-control" type="text" placeholder="Search" />
           <span class="input-group-btn">
-					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getAuthors()">
-						<span class="glyphicon glyphicon-search"></span>
-          </button>
-
+  					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getAuthors()">
+  						<span class="glyphicon glyphicon-search"></span>
+           </button>
+          </span>
         </div>
 
       </div>
-      <div class=".col-xs-6 .col-md-4">
-        <button type="button" class="btn btn-primary pull-right h2" ng-show="!$ctrl.isModal" ng-click="$ctrl.insertAuthor(author)">New Author</button>
+      <div class="col-xs-3 col-md-4">
+        <button type="button" class="btn btn-primary pull-right h2" ng-show="!$ctrl.isModal" ng-click="$ctrl.insertAuthor(author)">New</button>
         <button type="button" class="btn btn-primary pull-right h2" ng-show="$ctrl.isModal" ng-click="$ctrl.modalInstance.dismiss()">Close</button>
       </div>
     </div>
   </div>
 
-  <div class="container">
+  <div class="container-fluid">
 
     <div class="table-responsive">
       <fieldset>
@@ -31,7 +31,7 @@
           <tr>
             <th>Id</th>
             <th>Name</th>
-            <th class="actions">Actions</th>
+            <th class="actions">{{$ctrl.isModal ? "" : "Actions"}}</th>
           </tr>
           <!-- <tr ng-repeat="author in $ctrl.authors | filter:criteriaSearch | orderBy:['firstName', 'lastName']"> -->
           <tr ng-repeat="author in $ctrl.pagination.displayItems = ($ctrl.authors | filter:criteriaSearch | filter:$ctrl.filterFullName) | orderBy:['firstName', 'lastName'] | limitTo:$ctrl.pagination.totalPerPage:$ctrl.pagination.totalPerPage*($ctrl.pagination.currentPage-1)">
@@ -44,8 +44,7 @@
             </td>
           </tr>
         </table>
-        <ul uib-pagination ng-model="$ctrl.pagination.currentPage" total-items="$ctrl.pagination.displayItems.length"
-			     ng-change="$ctrl.pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page="$ctrl.pagination.totalPerPage"></ul>
+        <ul uib-pagination ng-model="$ctrl.pagination.currentPage" total-items="$ctrl.pagination.displayItems.length" ng-change="$ctrl.pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page="$ctrl.pagination.totalPerPage"></ul>
 
       </fieldset>
     </div>

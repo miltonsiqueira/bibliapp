@@ -1,48 +1,49 @@
+<div ng-class="$ctrl.isModal ? 'modal-body': 'container-fluid'">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-md-4">
+        <h3>Books</h3>
+      </div>
+      <div class="col-xs-9 col-md-4">
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3">
-			<h3>Books</h3>
-		</div>
-		<div class="col-sm-6">
+        <div class="input-group h2">
+          <input ng-keyup="$event.keyCode == 13 ? $ctrl.getAuthors() : null" ng-model="criteriaSearch" class="form-control" type="text" placeholder="Search" />
+          <span class="input-group-btn">
+  					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getBooks()">
+  						<span class="glyphicon glyphicon-search"/></span>
+            </button>
+          </span>
+        </div>
 
-			<div class="input-group h2">
-				<input ng-keyup="$event.keyCode == 13 ? $ctrl.getBooks() : null" ng-model='criteriaSearch' name="data[search]" class="form-control" id="search" type="text" placeholder="Search">
-				<span class="input-group-btn">
-					<button class="btn btn-primary" type="submit" ng-click="$ctrl.getBooks()">
-						<span class="glyphicon glyphicon-search"></span>
-					</button>
-				</span>
-			</div>
+      </div>
+      <div class="col-xs-3 col-md-4">
+        <button type="button" class="btn btn-primary pull-right h2" ng-click="$ctrl.insertBook(book)">New Book</button>
+        <button type="button" class="btn btn-primary pull-right h2" ng-show="$ctrl.isModal" ng-click="$ctrl.modalInstance.dismiss()">Close</button>
+      </div>
+    </div>
+  </div>
 
-		</div>
-    <div class=".col-xs-6 .col-md-4">
-      <button type="button" class="btn btn-primary pull-right h2" ng-click="$ctrl.insertBook(book)">New Book</button>
+  <div class="container-fluid">
+
+    <div class="table-responsive">
+      <table class='table table-hover'>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th class="actions">Actions</th>
+        </tr>
+        <!-- <tr ng-repeat="book in $ctrl.books | filter:criteriaSearch | orderBy:'title'"> -->
+        <tr ng-repeat="book in $ctrl.pagination.displayItems = ($ctrl.books | filter:criteriaSearch) | orderBy:'title' | limitTo:$ctrl.pagination.totalPerPage:$ctrl.pagination.totalPerPage*($ctrl.pagination.currentPage-1)">
+          <td>{{book.id}}</td>
+          <td>{{book.title}}</td>
+          <td class="actions">
+            <a class="btn btn-primary btn-xs" ng-click="$ctrl.updateBook(book)">Edit</a>
+            <a class="btn btn-danger btn-xs" ng-click="$ctrl.deleteBook(book)">Delete</a>
+          </td>
+        </tr>
+      </table>
+      <ul uib-pagination ng-model="$ctrl.pagination.currentPage" total-items="$ctrl.pagination.displayItems.length" ng-change="$ctrl.pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page="$ctrl.pagination.totalPerPage"></ul>
+
     </div>
   </div>
 </div>
-
-<div class="container">
-
-  <div class="table-responsive">
-    <table class='table table-hover'>
-      <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th class="actions">Actions</th>
-      </tr>
-      <!-- <tr ng-repeat="book in $ctrl.books | filter:criteriaSearch | orderBy:'title'"> -->
-      <tr ng-repeat="book in $ctrl.pagination.displayItems = ($ctrl.books | filter:criteriaSearch) | orderBy:'title' | limitTo:$ctrl.pagination.totalPerPage:$ctrl.pagination.totalPerPage*($ctrl.pagination.currentPage-1)">
-        <td>{{book.id}}</td>
-        <td>{{book.title}}</td>
-        <td class="actions">
-          <a class="btn btn-primary btn-xs" ng-click="$ctrl.updateBook(book)">Edit</a>
-          <a class="btn btn-danger btn-xs"  ng-click="$ctrl.deleteBook(book)" >Delete</a>
-        </td>
-      </tr>
-    </table>
-    <ul uib-pagination ng-model="$ctrl.pagination.currentPage" total-items="$ctrl.pagination.displayItems.length"
-       ng-change="$ctrl.pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page="$ctrl.pagination.totalPerPage"></ul>
-
-  </div>
-</container>
